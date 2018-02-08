@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/translations.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
-    <link rel="next" title="Web listeners et filtres" href="web_listeners_filters.html" />
+    <link rel="next" title="RequestDispatcher et MVC" href="request_dispatcher.html" />
     <link rel="prev" title="Les attributs d’une application Web" href="attributs_web.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -466,7 +466,7 @@ request, session, application)</li>
 <div class="code-block-caption"><span class="caption-text">Récupération d’un utilisateur en session</span><a class="headerlink" href="#id1" title="Lien permanent vers ce code">¶</a></div>
 <div class="highlight-jsp"><div class="highlight"><pre><span></span><span class="k">&lt;%@</span><span class="n">page</span> <span class="n">pageEncoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&quot;text/html&quot;</span> <span class="k">%&gt;</span>
 <span class="c">&lt;!-- cet exemple ne fonctionne que s&#39;il existe un bean utilisateur en session --&gt;</span>
-<span class="k">&lt;jsp:useBean id=&quot;u&quot; beanName=&quot;utilisateur&quot; scope=&quot;session&quot; type=&quot;fr.epsi.Utilisateur&quot;/&gt;</span>
+<span class="k">&lt;jsp:useBean id=&quot;u&quot; beanName=&quot;utilisateur&quot; scope=&quot;session&quot; type=&quot;fr.compagnie.appli.Utilisateur&quot;/&gt;</span>
 <span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="nt">&lt;html&gt;</span>
     <span class="nt">&lt;head&gt;</span>
@@ -527,7 +527,7 @@ requête (attribut <code class="docutils literal"><span class="pre">param</span>
     <span class="nt">&lt;/head&gt;</span>
     <span class="nt">&lt;body&gt;</span>
         <span class="k">&lt;jsp:useBean id=&quot;now&quot; scope=&quot;page&quot; class=&quot;java.util.Date&quot;/&gt;</span>
-        <span class="k">&lt;jsp:useBean id=&quot;u&quot; scope=&quot;session&quot; class=&quot;fr.epsi.Utilisateur&quot;/&gt;</span>
+        <span class="k">&lt;jsp:useBean id=&quot;u&quot; scope=&quot;session&quot; class=&quot;fr.compagnie.appli.Utilisateur&quot;/&gt;</span>
         <span class="k">&lt;jsp:setProperty name=&quot;u&quot; property=&quot;nom&quot; param=&quot;nom&quot;/&gt;</span>
         <span class="k">&lt;jsp:setProperty name=&quot;u&quot; property=&quot;age&quot; param=&quot;age&quot;/&gt;</span>
         <span class="k">&lt;jsp:setProperty name=&quot;u&quot; property=&quot;dateCreation&quot; value=&quot;${now}&quot;/&gt;</span>
@@ -556,7 +556,7 @@ entrante&nbsp;:</p>
     <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;UTF-8&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;/head&gt;</span>
     <span class="nt">&lt;body&gt;</span>
-        <span class="k">&lt;jsp:useBean id=&quot;u&quot; scope=&quot;page&quot; class=&quot;fr.epsi.Utilisateur&quot;/&gt;</span>
+        <span class="k">&lt;jsp:useBean id=&quot;u&quot; scope=&quot;page&quot; class=&quot;fr.compagnie.appli.Utilisateur&quot;/&gt;</span>
         <span class="k">&lt;jsp:setProperty name=&quot;u&quot; property=&quot;nom&quot; param=&quot;nom&quot;/&gt;</span>
         <span class="k">&lt;jsp:setProperty name=&quot;u&quot; property=&quot;age&quot; param=&quot;age&quot;/&gt;</span>
 
@@ -590,7 +590,7 @@ dynamiquement grâce à une EL. Cette balise est similaire à un appel
         <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;UTF-8&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;/head&gt;</span>
     <span class="nt">&lt;body&gt;</span>
-        <span class="k">&lt;jsp:useBean id=&quot;u&quot; scope=&quot;page&quot; class=&quot;fr.epsi.Utilisateur&quot;/&gt;</span>
+        <span class="k">&lt;jsp:useBean id=&quot;u&quot; scope=&quot;page&quot; class=&quot;fr.compagnie.appli.Utilisateur&quot;/&gt;</span>
         <span class="k">&lt;jsp:setProperty name=&quot;u&quot; property=&quot;nom&quot; param=&quot;nom&quot;/&gt;</span>
         <span class="k">&lt;jsp:setProperty name=&quot;u&quot; property=&quot;age&quot; param=&quot;age&quot;/&gt;</span>
 
@@ -615,7 +615,7 @@ de l’application. Cette balise est similaire à un appel à
 <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/servlet/RequestDispatcher.html#forward-javax.servlet.ServletRequest-javax.servlet.ServletResponse-">RequestDispatcher.forward</a>.</p>
 <div class="literal-block-wrapper docutils container" id="id6">
 <div class="code-block-caption"><span class="caption-text">Un simple forward vers une autre page en fonction d’un paramètre</span><a class="headerlink" href="#id6" title="Lien permanent vers ce code">¶</a></div>
-<div class="highlight-jsp"><div class="highlight"><pre><span></span><span class="k">&lt;jsp:useBean id=&quot;u&quot; scope=&quot;page&quot; class=&quot;fr.epsi.Utilisateur&quot;/&gt;</span>
+<div class="highlight-jsp"><div class="highlight"><pre><span></span><span class="k">&lt;jsp:useBean id=&quot;u&quot; scope=&quot;page&quot; class=&quot;fr.compagnie.appli.Utilisateur&quot;/&gt;</span>
 <span class="k">&lt;jsp:setProperty name=&quot;u&quot; property=&quot;nom&quot; param=&quot;nom&quot;/&gt;</span>
 <span class="k">&lt;jsp:setProperty name=&quot;u&quot; property=&quot;age&quot; param=&quot;age&quot;/&gt;</span>
 <span class="k">&lt;jsp:forward page=&quot;${u.age lt 18 ? &#39;mineur.jsp&#39; : &#39;majeur.jsp&#39;}&quot; /&gt;</span>
@@ -687,7 +687,7 @@ permettant une programmation simplifiée dans les JSP.</p>
         <span class="c">&lt;!-- c:choose permet de spécifier autant de c:when que l&#39;on souhaite --&gt;</span>
         <span class="nt">&lt;c:choose&gt;</span>
             <span class="nt">&lt;c:when</span> <span class="na">test=</span><span class="s">&quot;${param[&#39;age&#39;] lt 18}&quot;</span><span class="nt">&gt;</span>
-            Vous êtes mineur !
+                Vous êtes mineur !
             <span class="nt">&lt;/c:when&gt;</span>
             <span class="nt">&lt;c:otherwise&gt;</span>
                 Vous êtes majeur !
@@ -937,6 +937,7 @@ celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-impo
 <li class="toctree-l2"><a class="reference internal" href="#exercices">Exercices</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="request_dispatcher.html">RequestDispatcher et MVC</a></li>
 <li class="toctree-l1"><a class="reference internal" href="web_listeners_filters.html">Web listeners et filtres</a></li>
 </ul>
 
@@ -944,11 +945,11 @@ celle vue dans <a class="reference internal" href="maven.html#maven-eclipse-impo
 <hr />
 <ul>
     
+    <li class="toctree-l1"><a href="http://docs.oracle.com/javase/8/docs/">Documentation Java</a></li>
+    
     <li class="toctree-l1"><a href="https://docs.oracle.com/javaee/7/api/">API Java EE</a></li>
     
     <li class="toctree-l1"><a href="http://docs.oracle.com/javase/8/docs/api/index.html?overview-summary.html">API Java</a></li>
-    
-    <li class="toctree-l1"><a href="http://docs.oracle.com/javase/8/docs/">Documentation Java</a></li>
     
 </ul>
 
