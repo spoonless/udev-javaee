@@ -1,0 +1,334 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>JDBC dans une application Web &#8212; documentation Java EE 1.0</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="next" title="Les EJB" href="ejb.html" />
+    <link rel="prev" title="Web listeners et filtres" href="../web_listeners_filters.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="jdbc-dans-une-application-web">
+<h1>JDBC dans une application Web<a class="headerlink" href="#jdbc-dans-une-application-web" title="Lien permanent vers ce titre">¶</a></h1>
+<p>JDBC (Java DataBase Connectivity) est l’API standard pour interagir avec les
+bases données relationnelles en Java. Cette API peut être utilisée dans une
+application Web.</p>
+<div class="section" id="declaration-d-une-datasource">
+<h2>Déclaration d’une DataSource<a class="headerlink" href="#declaration-d-une-datasource" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Dans un serveur d’application, l’utilisation du <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/sql/DriverManager.html">DriverManager</a> JDBC est remplacée
+par celle de la <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a>. L’interface <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a> n’offre que deux méthodes :</p>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="c1">// Attempts to establish a connection with the data source</span>
+<span class="n">Connection</span> <span class="nf">getConnection</span><span class="o">()</span>
+
+<span class="c1">// Attempts to establish a connection with the data source</span>
+<span class="n">Connection</span> <span class="nf">getConnection</span><span class="o">(</span><span class="n">String</span> <span class="n">username</span><span class="o">,</span> <span class="n">String</span> <span class="n">password</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Il n’est pas possible de spécifier l’URL de connection à la base de données
+avec une <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a>. Par contre une <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a> peut être injectée dans
+n’importe quel composant Java EE grâce à l’annotation <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/annotation/Resource.html">Resource</a> :</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Injection d’une DataSource dans une Servlet</span><a class="headerlink" href="#id1" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.Connection</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.annotation.Resource</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.ServletException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.annotation.WebServlet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServlet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletRequest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletResponse</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.sql.DataSource</span><span class="o">;</span>
+
+<span class="nd">@WebServlet</span><span class="o">(</span><span class="s">&quot;/MyServlet&quot;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyServlet</span> <span class="kd">extends</span> <span class="n">HttpServlet</span> <span class="o">{</span>
+
+  <span class="nd">@Resource</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;nomDeLaDataSource&quot;</span><span class="o">)</span>
+  <span class="kd">private</span> <span class="n">DataSource</span> <span class="n">dataSource</span><span class="o">;</span>
+
+  <span class="nd">@Override</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">resp</span><span class="o">)</span>
+                          <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>
+
+    <span class="k">try</span> <span class="o">(</span><span class="n">Connection</span> <span class="n">connection</span> <span class="o">=</span> <span class="n">dataSource</span><span class="o">.</span><span class="na">getConnection</span><span class="o">())</span> <span class="o">{</span>
+      <span class="c1">// ...</span>
+    <span class="o">}</span>
+
+  <span class="o">}</span>
+
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<p>L’annotation <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/annotation/Resource.html">Resource</a> permet de spécifier le nom de la <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a> grâce à
+l’attribut <em>name</em>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>L’annotation <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/annotation/Resource.html">Resource</a> se base sur <strong>JNDI</strong> (Java Naming and Directory
+Interface) pour rechercher la <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a> demandée. JNDI est une API standard
+de Java permettant de se connecter à des annuaires (notamment les annuaires
+LDAP). Les serveurs d’application Java EE disposent de leur propre implémentation
+interne d’annuaire permettant de stocker des instances d’objet.</p>
+<p>Les ressources telles que les <em>DataSources</em> sont donc stockées dans un annuaire
+interne et il est possible d’y accéder avec l’API JNDI. Les ressources sont
+classées dans une arborescence (comme le sont les fichiers dans un système
+de fichiers). Une ressource est stockée dans l’arborescence <strong>java:/comp/env</strong>.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Exemple de récupération d’une DataSource en utilisant l’API JNDI</span><a class="headerlink" href="#id2" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="c1">// javax.naming.InitialContext désigne le contexte racine de l&#39;annuaire.</span>
+<span class="c1">// Un annuaire JDNI est constitué d&#39;instances de javax.naming.Context</span>
+<span class="c1">// (qui sont l&#39;équivalent des répertoires dans un système de fichiers).</span>
+<span class="n">Context</span> <span class="n">envContext</span> <span class="o">=</span> <span class="n">InitialContext</span><span class="o">.</span><span class="na">doLookup</span><span class="o">(</span><span class="s">&quot;java:/comp/env&quot;</span><span class="o">);</span>
+
+<span class="c1">// On récupère la source de données dans le contexte java:/comp/env</span>
+<span class="n">DataSource</span> <span class="n">dataSource</span> <span class="o">=</span> <span class="n">DataSource</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">cast</span><span class="o">(</span><span class="n">envContext</span><span class="o">.</span><span class="na">lookup</span><span class="o">(</span><span class="s">&quot;nomDeLaDataSource&quot;</span><span class="o">));</span>
+</pre></div>
+</div>
+</div>
+<p class="last">Le contexte JNDI <strong>java:/comp/env</strong> est un contexte particulier. Il désigne
+l’ensemble des composants Java EE disponibles dans l’environnement (env) du
+composant Java EE (comp) courant.</p>
+</div>
+</div>
+<div class="section" id="declaration-de-la-datasource-dans-le-fichier-web-xml">
+<h2>Déclaration de la DataSource dans le fichier web.xml<a class="headerlink" href="#declaration-de-la-datasource-dans-le-fichier-web-xml" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Le fichier de déploiement <code class="file docutils literal"><span class="pre">web.xml</span></code> doit déclarer la <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a> comme
+une ressource de l’application. Cela va permettre au serveur d’application
+de permettre à l’application de se connecter à la base de données associée.
+Pour cela, on utilise l’élément <code class="docutils literal"><span class="pre">&lt;resource-ref&gt;</span></code> dans le fichier <code class="file docutils literal"><span class="pre">web.xml</span></code> :</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Déclaration de la DataSource dans le fichier web.xml</span><a class="headerlink" href="#id3" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="nt">&lt;resource-ref&gt;</span>
+<span class="nt">&lt;res-ref-name&gt;</span>nomDeLaDataSource<span class="nt">&lt;/res-ref-name&gt;</span>
+  <span class="nt">&lt;res-type&gt;</span>javax.sql.DataSource<span class="nt">&lt;/res-type&gt;</span>
+  <span class="nt">&lt;mapped-name&gt;</span>java:/nomDeLaDataSource<span class="nt">&lt;/mapped-name&gt;</span>
+<span class="nt">&lt;/resource-ref&gt;</span>
+</pre></div>
+</div>
+</div>
+<p>Mais comment le serveur d’application fait-il pour lier
+une <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a> avec une connexion vers une base de données ? Malheureusement,
+il n’existe pas de standard et chaque serveur d’application dispose de sa
+procédure. Nous allons voir dans la section suivante comment créer une <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a>
+spécifiquement pour Wildfly.</p>
+</div>
+<div class="section" id="declaration-d-une-datasource-dans-wildfly">
+<h2>Déclaration d’une DataSource dans Wildfly<a class="headerlink" href="#declaration-d-une-datasource-dans-wildfly" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Une connexion JDBC est réalisée à travers un pilote. Pour déclarer une <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a>
+vers une base de données MySQL par exemple, nous devons installer le pilote
+MySQL dans le serveur.</p>
+<p>Vous pouvez télécharger le driver MySQL pour JDBC
+<a class="reference external" href="http://mvnrepository.com/artifact/mysql/mysql-connector-java">ici selon la version</a>.</p>
+<p>Pour ajouter ce pilote dans Wildfly, il faut créer un nouveau module dans le serveur.
+Pour cela, à partir du répertoire d’installation du serveur lui-même, placez
+le fichier <em>jar</em> du pilote dans le répertoire <code class="file docutils literal"><span class="pre">modules/system/layers/base/com/mysql/driver/main</span></code>.
+Créez les répertoires manquants si nécessaire.</p>
+<p>Créez ensuite le fichier <code class="file docutils literal"><span class="pre">module.xml</span></code> dans le répertoire
+<code class="file docutils literal"><span class="pre">modules/system/layers/base/com/mysql/driver/main</span></code>. Ce fichier doit pointer
+sur le fichier <em>jar</em> du pilote :</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Fichier module.xml</span><a class="headerlink" href="#id4" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39;?&gt;</span>
+<span class="nt">&lt;module</span> <span class="na">xmlns=</span><span class="s">&quot;urn:jboss:module:1.5&quot;</span> <span class="na">name=</span><span class="s">&quot;com.mysql.driver&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;resources&gt;</span>
+    <span class="c">&lt;!-- Indiquez le chemin vers le fichier jar du pilote --&gt;</span>
+    <span class="nt">&lt;resource-root</span> <span class="na">path=</span><span class="s">&quot;mysql-connector-java-X.X.X.jar&quot;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/resources&gt;</span>
+  <span class="nt">&lt;dependencies&gt;</span>
+    <span class="nt">&lt;module</span> <span class="na">name=</span><span class="s">&quot;javax.api&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;module</span> <span class="na">name=</span><span class="s">&quot;javax.transaction.api&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;module</span> <span class="na">name=</span><span class="s">&quot;javax.servlet.api&quot;</span> <span class="na">optional=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;module</span> <span class="na">name=</span><span class="s">&quot;javax.ws.rs.api&quot;</span> <span class="na">optional=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/dependencies&gt;</span>
+<span class="nt">&lt;/module&gt;</span>
+</pre></div>
+</div>
+</div>
+<p>Une fois, le pilote déclaré comme un module dans le serveur, il est possible
+de déclarer la <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a> dans le fichier <code class="file docutils literal"><span class="pre">standalone/configuration/standalone.xml</span></code>.
+Au alentour de la ligne 140 dans ce fichier, on trouve la section de déclaration
+des pilotes de base de données et des sources de données :</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">ajout d’une source de données dans le fichier standalone.xml</span><a class="headerlink" href="#id5" title="Lien permanent vers ce code">¶</a></div>
+<div class="highlight-xml"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168</pre></div></td><td class="code"><div class="highlight"><pre><span></span>  <span class="nt">&lt;subsystem</span> <span class="na">xmlns=</span><span class="s">&quot;urn:jboss:domain:datasources:5.0&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;datasources&gt;</span>
+          <span class="nt">&lt;datasource</span> <span class="na">jndi-name=</span><span class="s">&quot;java:jboss/datasources/ExampleDS&quot;</span> <span class="na">pool-name=</span><span class="s">&quot;ExampleDS&quot;</span> <span class="na">enabled=</span><span class="s">&quot;true&quot;</span> <span class="na">use-java-context=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
+              <span class="nt">&lt;connection-url&gt;</span>jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE<span class="nt">&lt;/connection-url&gt;</span>
+              <span class="nt">&lt;driver&gt;</span>h2<span class="nt">&lt;/driver&gt;</span>
+              <span class="nt">&lt;security&gt;</span>
+                  <span class="nt">&lt;user-name&gt;</span>sa<span class="nt">&lt;/user-name&gt;</span>
+                  <span class="nt">&lt;password&gt;</span>sa<span class="nt">&lt;/password&gt;</span>
+              <span class="nt">&lt;/security&gt;</span>
+          <span class="nt">&lt;/datasource&gt;</span>
+<span class="hll">          <span class="nt">&lt;datasource</span> <span class="na">jta=</span><span class="s">&quot;true&quot;</span> <span class="na">jndi-name=</span><span class="s">&quot;java:/nomDeLaDataSource&quot;</span> <span class="na">pool-name=</span><span class="s">&quot;nomDeLaDataSource&quot;</span> <span class="na">enabled=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
+</span><span class="hll">              <span class="nt">&lt;connection-url&gt;</span>jdbc:mysql://[HOST]:[PORT]/[NOM SCHEMA]<span class="nt">&lt;/connection-url&gt;</span>
+</span><span class="hll">              <span class="nt">&lt;driver&gt;</span>mysql<span class="nt">&lt;/driver&gt;</span>
+</span><span class="hll">              <span class="nt">&lt;security&gt;</span>
+</span><span class="hll">                  <span class="nt">&lt;user-name&gt;</span>[LOGIN]<span class="nt">&lt;/user-name&gt;</span>
+</span><span class="hll">                  <span class="nt">&lt;password&gt;</span>[PASSWORD]<span class="nt">&lt;/password&gt;</span>
+</span><span class="hll">              <span class="nt">&lt;/security&gt;</span>
+</span><span class="hll">          <span class="nt">&lt;/datasource&gt;</span>
+</span>          <span class="nt">&lt;drivers&gt;</span>
+              <span class="nt">&lt;driver</span> <span class="na">name=</span><span class="s">&quot;h2&quot;</span> <span class="na">module=</span><span class="s">&quot;com.h2database.h2&quot;</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;xa-datasource-class&gt;</span>org.h2.jdbcx.JdbcDataSource<span class="nt">&lt;/xa-datasource-class&gt;</span>
+              <span class="nt">&lt;/driver&gt;</span>
+<span class="hll">              <span class="nt">&lt;driver</span> <span class="na">name=</span><span class="s">&quot;mysql&quot;</span> <span class="na">module=</span><span class="s">&quot;com.mysql.driver&quot;</span><span class="nt">&gt;</span>
+</span><span class="hll">                  <span class="nt">&lt;driver-class&gt;</span>com.mysql.jdbc.Driver<span class="nt">&lt;/driver-class&gt;</span>
+</span><span class="hll">              <span class="nt">&lt;/driver&gt;</span>
+</span>          <span class="nt">&lt;/drivers&gt;</span>
+      <span class="nt">&lt;/datasources&gt;</span>
+  <span class="nt">&lt;/subsystem&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>Ce système de configuration est certes plus compliqué que l’utilisation du
+<a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/sql/DriverManager.html">DriverManager</a> mais il permet à l’application d’ignorer les détails de
+configuration. Généralement le développeur de l’application référence une <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a>
+et c’est l’administrateur du serveur qui configure la connexion de cette <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/javax/sql/DataSource.html">DataSource</a>
+vers une base de données spécifiques.</p>
+<p>L’utilisation des <em>DataSources</em> dans un serveur d’application
+apporte également des fonctionnalités supplémentaires telles que la mise en
+cache et la réutilisation de connexions (pour améliorer les performances),
+les tests permettant de vérifier que les connexions sont correctement
+établies, la supervision des connexions…</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Java EE</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../environnement_developpement.html">L’environnement de développement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../premiere_application.html">Une première application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maven.html">Introduction à Maven</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../servlet.html">Les Servlets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../conteneur_web.html">Le conteneur Web</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../attributs_web.html">Les attributs d’une application Web</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../jsp.html">JSP : Java Server Pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../request_dispatcher.html">RequestDispatcher et MVC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../web_listeners_filters.html">Web listeners et filtres</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">JDBC dans une application Web</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#declaration-d-une-datasource">Déclaration d’une DataSource</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#declaration-de-la-datasource-dans-le-fichier-web-xml">Déclaration de la DataSource dans le fichier web.xml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#declaration-d-une-datasource-dans-wildfly">Déclaration d’une DataSource dans Wildfly</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ejb.html">Les EJB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jpa_entites.html">Les entités JPA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jpa_queries.html">Les requêtes JPA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jpa_inheritance.html">L’héritage avec JPA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jpa_relations.html">Les relations avec JPA</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://docs.oracle.com/javase/8/docs/">Documentation Java</a></li>
+    
+    <li class="toctree-l1"><a href="http://docs.oracle.com/javase/8/docs/api/index.html?overview-summary.html">API Java</a></li>
+    
+    <li class="toctree-l1"><a href="https://docs.oracle.com/javaee/7/api/">API Java EE</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Recherche rapide</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;
+<a ref="author" href="mailto:dagaydevel@free.fr">David Gayerie</a>
+<a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/3.0/fr/80x15.png" /></a>
+.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
