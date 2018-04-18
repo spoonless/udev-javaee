@@ -42,7 +42,7 @@
             
   <div class="section" id="java-server-faces-jsf">
 <h1>Java Server Faces (JSF)<a class="headerlink" href="#java-server-faces-jsf" title="Lien permanent vers ce titre">¶</a></h1>
-<p>Java Server Faces (JSF) est défini par la <a class="reference external" href="https://jcp.org/en/jsr/detail?id=314">JSR 314</a>. Il s’agit d’un
+<p>Java Server Faces (JSF) est défini par la <a class="reference external" href="https://jcp.org/en/jsr/detail?id=344">JSR 344</a>. Il s’agit d’un
 framework permettant de créer des applications Web complètes.</p>
 <p>Il existe de nombreux frameworks permettant de développer des
 applications Web en Java&nbsp;: JSF, Struts2, Spring MVC, Wicket, GWT, Play,
@@ -185,8 +185,8 @@ son propre espace de nom XML.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>h</td>
-<td><a class="reference external" href="http://java.sun.com/j">http://java.sun.com/j</a>
-sf/html</td>
+<td><a class="reference external" href="http://xmlns.jcp.org/">http://xmlns.jcp.org/</a>
+jsf/html</td>
 <td>Contient les balises pour
 le rendu HTML des
 éléments pris en charge
@@ -195,8 +195,8 @@ par JSF</td>
 h:form h:inputText</td>
 </tr>
 <tr class="row-odd"><td>f</td>
-<td><a class="reference external" href="http://java.sun.com/j">http://java.sun.com/j</a>
-sf/core</td>
+<td><a class="reference external" href="http://xmlns.jcp.org/">http://xmlns.jcp.org/</a>
+jsf/core</td>
 <td>Contient les balises qui
 ne génèrent pas de rendu
 HTML mais assurent
@@ -207,8 +207,8 @@ de données</td>
 f:ajax</td>
 </tr>
 <tr class="row-even"><td>c</td>
-<td><a class="reference external" href="http://java.sun.com/j">http://java.sun.com/j</a>
-sp/jstl/core</td>
+<td><a class="reference external" href="http://xmlns.jcp.org/">http://xmlns.jcp.org/</a>
+jsp/jstl/core</td>
 <td>Contient les balises de
 la bibliothèque JSTL core
 (Cf <a class="reference external" href="07_jsp.html#jstl">cours sur les
@@ -225,8 +225,8 @@ place.</td>
 <td>c:if c:forEach</td>
 </tr>
 <tr class="row-odd"><td>fn</td>
-<td><a class="reference external" href="http://java.sun.com/j">http://java.sun.com/j</a>
-sp/jstl/functions</td>
+<td><a class="reference external" href="http://xmlns.jcp.org/">http://xmlns.jcp.org/</a>
+jsp/jstl/functions</td>
 <td>Contient les fonctions de
 la bibliothèque JSTL
 functions (Cf <a class="reference external" href="07_jsp.html#jstl">cours sur
@@ -239,8 +239,8 @@ contient pas de balise.</td>
 fn:join</td>
 </tr>
 <tr class="row-even"><td>ui</td>
-<td><a class="reference external" href="http://java.sun.com/j">http://java.sun.com/j</a>
-sf/facelets</td>
+<td><a class="reference external" href="http://xmlns.jcp.org/">http://xmlns.jcp.org/</a>
+jsf/facelets</td>
 <td>Contient les balises
 permettant des
 compositions de vues. Il
@@ -254,8 +254,8 @@ automatiquement ce layout
 ui:composition</td>
 </tr>
 <tr class="row-odd"><td>cc</td>
-<td><a class="reference external" href="http://java.sun.com/j">http://java.sun.com/j</a>
-sf/composite</td>
+<td><a class="reference external" href="http://xmlns.jcp.org/">http://xmlns.jcp.org/</a>
+jsf/composite</td>
 <td>Permet de définir de
 nouveaux composants
 graphiques.</td>
@@ -265,11 +265,11 @@ cc:implementation</td>
 </tbody>
 </table>
 <p>La documentation des bibliothèques de balises est disponible sur
-<a class="reference external" href="http://myfaces.apache.org/core22/myfaces-impl/tlddoc-facelets/index.html">http://myfaces.apache.org/core22/myfaces-impl/tlddoc-facelets/index.html</a></p>
-<p>La bibliothèque JSF HTML (<a class="reference external" href="http://java.sun.com/jsf/html">http://java.sun.com/jsf/html</a>) contient
+<a class="reference external" href="https://docs.oracle.com/javaee/7/javaserver-faces-2-2/vdldocs-facelets/">https://docs.oracle.com/javaee/7/javaserver-faces-2-2/vdldocs-facelets/</a></p>
+<p>La bibliothèque JSF HTML (<a class="reference external" href="http://xmlns.jcp.org/jsf/html">http://xmlns.jcp.org/jsf/html</a>) contient
 notamment les balises
-<a class="reference external" href="http://myfaces.apache.org/core22/myfaces-impl/tlddoc-facelets/h/head.html">h:head</a>,
-<a class="reference external" href="http://myfaces.apache.org/core22/myfaces-impl/tlddoc-facelets/h/body.html">h:body</a>.
+<a class="reference external" href="https://docs.oracle.com/javaee/7/javaserver-faces-2-2/vdldocs-facelets/h/head.html">h:head</a>,
+<a class="reference external" href="https://docs.oracle.com/javaee/7/javaserver-faces-2-2/vdldocs-facelets/h/body.html">h:body</a>.
 Ces balises permettent d’indiquer au moteur JSF les parties du document
 HTML qui correspondent aux en-entêtes et au corps. JSF utilise ces
 informations pour éventuellement enrichir la page XHTML finale avec des
@@ -281,7 +281,7 @@ balises supplémentaires.</p>
 <span class="cp">          &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span>
 <span class="cp">          &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</span>
 <span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span>
-      <span class="na">xmlns:h=</span><span class="s">&quot;http://java.sun.com/jsf/html&quot;</span> <span class="nt">&gt;</span>
+      <span class="na">xmlns:h=</span><span class="s">&quot;http://xmlns.jcp.org/jsf/html&quot;</span> <span class="nt">&gt;</span>
 <span class="nt">&lt;h:head&gt;</span>
   <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;Content-Type&quot;</span> <span class="na">content=</span><span class="s">&quot;text/html; charset=UTF-8&quot;</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/h:head&gt;</span>
@@ -305,9 +305,9 @@ voici une facelet affichant les paramètres de la requête HTTP&nbsp;:</p>
 <span class="cp">          &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span>
 <span class="cp">          &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</span>
 <span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span>
-      <span class="na">xmlns:h=</span><span class="s">&quot;http://java.sun.com/jsf/html&quot;</span>
-      <span class="na">xmlns:c=</span><span class="s">&quot;http://java.sun.com/jsp/jstl/core&quot;</span>
-      <span class="na">xmlns:fn=</span><span class="s">&quot;http://java.sun.com/jsp/jstl/functions&quot;</span><span class="nt">&gt;</span>
+      <span class="na">xmlns:h=</span><span class="s">&quot;http://xmlns.jcp.org/jsf/html&quot;</span>
+      <span class="na">xmlns:c=</span><span class="s">&quot;http://xmlns.jcp.org/jsp/jstl/core&quot;</span>
+      <span class="na">xmlns:fn=</span><span class="s">&quot;http://xmlns.jcp.org/jsp/jstl/functions&quot;</span><span class="nt">&gt;</span>
 <span class="nt">&lt;h:head&gt;</span>
   <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;Content-Type&quot;</span> <span class="na">content=</span><span class="s">&quot;text/html; charset=UTF-8&quot;</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/h:head&gt;</span>
@@ -394,7 +394,7 @@ le projet, il est possible de l’utiliser dans une facelet&nbsp;:</p>
 <span class="cp">          &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span>
 <span class="cp">          &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</span>
 <span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span>
-      <span class="na">xmlns:h=</span><span class="s">&quot;http://java.sun.com/jsf/html&quot;</span> <span class="nt">&gt;</span>
+      <span class="na">xmlns:h=</span><span class="s">&quot;http://xmlns.jcp.org/jsf/html&quot;</span> <span class="nt">&gt;</span>
 <span class="nt">&lt;h:head&gt;</span>
   <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;Content-Type&quot;</span> <span class="na">content=</span><span class="s">&quot;text/html; charset=UTF-8&quot;</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/h:head&gt;</span>
@@ -486,7 +486,7 @@ accédant <em>via</em> le bean CDI personneControleur vu précédemment&nbsp;:</
 <span class="cp">          &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span>
 <span class="cp">          &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</span>
 <span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span>
-      <span class="na">xmlns:h=</span><span class="s">&quot;http://java.sun.com/jsf/html&quot;</span> <span class="nt">&gt;</span>
+      <span class="na">xmlns:h=</span><span class="s">&quot;http://xmlns.jcp.org/jsf/html&quot;</span> <span class="nt">&gt;</span>
 <span class="nt">&lt;h:head&gt;</span>
   <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;Content-Type&quot;</span> <span class="na">content=</span><span class="s">&quot;text/html; charset=UTF-8&quot;</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/h:head&gt;</span>
@@ -538,7 +538,7 @@ paramètres qui seront passés à la méthode côté serveur.</p>
 <span class="cp">          &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span>
 <span class="cp">          &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</span>
 <span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span>
-      <span class="na">xmlns:h=</span><span class="s">&quot;http://java.sun.com/jsf/html&quot;</span> <span class="nt">&gt;</span>
+      <span class="na">xmlns:h=</span><span class="s">&quot;http://xmlns.jcp.org/jsf/html&quot;</span> <span class="nt">&gt;</span>
 <span class="nt">&lt;h:head&gt;</span>
   <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;Content-Type&quot;</span> <span class="na">content=</span><span class="s">&quot;text/html; charset=UTF-8&quot;</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/h:head&gt;</span>
@@ -657,7 +657,7 @@ résultat d’une EL.</p>
 <span class="cp">          &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span>
 <span class="cp">          &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</span>
 <span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span>
-      <span class="na">xmlns:h=</span><span class="s">&quot;http://java.sun.com/jsf/html&quot;</span> <span class="nt">&gt;</span>
+      <span class="na">xmlns:h=</span><span class="s">&quot;http://xmlns.jcp.org/jsf/html&quot;</span> <span class="nt">&gt;</span>
 <span class="nt">&lt;h:head&gt;</span>
   <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;Content-Type&quot;</span> <span class="na">content=</span><span class="s">&quot;text/html; charset=UTF-8&quot;</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/h:head&gt;</span>
@@ -681,7 +681,7 @@ résultat d’une EL.</p>
 <h2>La validation de formulaire<a class="headerlink" href="#la-validation-de-formulaire" title="Lien permanent vers ce titre">¶</a></h2>
 <p>La validation des données de formulaire est une autre fonctionnalité
 importante des frameworks Web. La bibliothèque de balises
-<a class="reference external" href="http://myfaces.apache.org/core22/myfaces-impl/tlddoc-facelets/f/tld-summary.html">core</a>
+<a class="reference external" href="https://docs.oracle.com/javaee/7/javaserver-faces-2-2/vdldocs-facelets/f/tld-summary.html">core</a>
 de JSF fournit, entre autres, les balises <code class="docutils literal"><span class="pre">f:validateDoubleRange</span></code>,
 <code class="docutils literal"><span class="pre">f:validateLength</span></code>, <code class="docutils literal"><span class="pre">f:validateLongRange</span></code>, <code class="docutils literal"><span class="pre">f:validateRegex</span></code> et
 <code class="docutils literal"><span class="pre">f:validateRequired</span></code>. Utilisées comme balises filles des entrées de
@@ -695,8 +695,8 @@ par l’utilisateur avant de transférer le traitement au contrôleur.</p>
 <span class="cp">          &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span>
 <span class="cp">          &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</span>
 <span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span>
-      <span class="na">xmlns:h=</span><span class="s">&quot;http://java.sun.com/jsf/html&quot;</span>
-      <span class="na">xmlns:f=</span><span class="s">&quot;http://java.sun.com/jsf/core&quot;</span> <span class="nt">&gt;</span>
+      <span class="na">xmlns:h=</span><span class="s">&quot;http://xmlns.jcp.org/jsf/html&quot;</span>
+      <span class="na">xmlns:f=</span><span class="s">&quot;http://xmlns.jcp.org/jsf/core&quot;</span> <span class="nt">&gt;</span>
 <span class="nt">&lt;h:head&gt;</span>
   <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;Content-Type&quot;</span> <span class="na">content=</span><span class="s">&quot;text/html; charset=UTF-8&quot;</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/h:head&gt;</span>
@@ -768,8 +768,8 @@ l’utilisateur.</p>
 <span class="cp">          &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span>
 <span class="cp">          &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</span>
 <span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span>
-      <span class="na">xmlns:h=</span><span class="s">&quot;http://java.sun.com/jsf/html&quot;</span>
-      <span class="na">xmlns:f=</span><span class="s">&quot;http://java.sun.com/jsf/core&quot;</span> <span class="nt">&gt;</span>
+      <span class="na">xmlns:h=</span><span class="s">&quot;http://xmlns.jcp.org/jsf/html&quot;</span>
+      <span class="na">xmlns:f=</span><span class="s">&quot;http://xmlns.jcp.org/jsf/core&quot;</span> <span class="nt">&gt;</span>
 <span class="nt">&lt;h:head&gt;</span>
   <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;Content-Type&quot;</span> <span class="na">content=</span><span class="s">&quot;text/html; charset=UTF-8&quot;</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/h:head&gt;</span>
@@ -932,8 +932,8 @@ navigateur vers une nouvelle page.</p>
 <span class="cp">          &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;</span>
 <span class="cp">          &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</span>
 <span class="nt">&lt;html</span>
-  <span class="na">xmlns:f=</span><span class="s">&quot;http://java.sun.com/jsf/core&quot;</span>
-  <span class="na">xmlns:h=</span><span class="s">&quot;http://java.sun.com/jsf/html&quot;</span><span class="nt">&gt;</span>
+  <span class="na">xmlns:f=</span><span class="s">&quot;http://xmlns.jcp.org/jsf/core&quot;</span>
+  <span class="na">xmlns:h=</span><span class="s">&quot;http://xmlns.jcp.org/jsf/html&quot;</span><span class="nt">&gt;</span>
 <span class="nt">&lt;h:head&gt;</span>
   <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;Content-Type&quot;</span> <span class="na">content=</span><span class="s">&quot;text/html; charset=UTF-8&quot;</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/h:head&gt;</span>
@@ -1038,9 +1038,9 @@ bibliothèques tierces comme la très impressionnante
 <hr />
 <ul>
     
-    <li class="toctree-l1"><a href="http://docs.oracle.com/javase/8/docs/api/index.html?overview-summary.html">API Java</a></li>
-    
     <li class="toctree-l1"><a href="https://docs.oracle.com/javaee/7/api/">API Java EE</a></li>
+    
+    <li class="toctree-l1"><a href="http://docs.oracle.com/javase/8/docs/api/index.html?overview-summary.html">API Java</a></li>
     
     <li class="toctree-l1"><a href="http://docs.oracle.com/javase/8/docs/">Documentation Java</a></li>
     
